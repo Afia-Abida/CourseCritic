@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -21,6 +21,7 @@ const Login = () => {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
 
         setSuccessMessage("Login successful! Redirecting...");
         setErrorMessage("");
@@ -56,7 +57,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ padding: "10px", fontSize: "16px" }}
+            style={{ padding: "10px", fontSize: "16px", boxSizing: "border-box", width: "100%" }}
           />
           <input
             type="password"
@@ -64,18 +65,20 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ padding: "10px", fontSize: "16px" }}
+            style={{ padding: "10px", fontSize: "16px", boxSizing: "border-box", width: "100%" }}
           />
           <button
             type="submit"
             style={{
               padding: "10px",
               fontSize: "16px",
-              backgroundColor: "",
+              backgroundColor: "#007bff",
               color: "#fff",
               border: "none",
               cursor: "pointer",
               borderRadius: "4px",
+              boxSizing: "border-box",
+              width: "100%"
             }}
           >
             Login

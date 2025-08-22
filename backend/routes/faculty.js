@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Course = require("../models/Course"); 
+const Faculty = require("../models/Faculty");
 
-// GET all courses
+// GET all faculties
 router.get("/", async (req, res) => {
   try {
-    const courses = await Course.find({});
-    res.json(courses);
+    const faculties = await Faculty.find({});
+    res.json(faculties);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });

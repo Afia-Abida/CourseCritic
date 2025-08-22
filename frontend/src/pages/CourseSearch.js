@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 
 const CourseSearch = () => {
   const [courses, setCourses] = useState([]);
@@ -6,6 +7,8 @@ const CourseSearch = () => {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const navigate = useNavigate(); // ✅ initialize navigate
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -54,18 +57,9 @@ const CourseSearch = () => {
     }
   };
 
-  const handleSuggestionClick = (course) => {
-    setSearchTerm(course.code);
-    setFilteredCourses([course]);
-    setShowSuggestions(false);
-    setShowResults(true);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
+  // ✅ Navigate to CoursePage with courseId param
+  const handleCourseClick = (course) => {
+    navigate(`/course/${course._id}`);
   };
 
   return (
@@ -76,7 +70,7 @@ const CourseSearch = () => {
         placeholder="Search by code, name or department"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={handleKeyDown}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         style={{
           width: "100%",
           padding: "10px",
@@ -86,7 +80,7 @@ const CourseSearch = () => {
           boxSizing: "border-box",
         }}
       />
-  
+
       {showSuggestions && filteredCourses.length > 0 && (
         <ul
           style={{
@@ -104,8 +98,13 @@ const CourseSearch = () => {
           {filteredCourses.map((course) => (
             <li
               key={course._id}
-              onClick={() => handleSuggestionClick(course)}
-              style={{ padding: "8px", borderBottom: "1px solid #eee" }}
+              onClick={() => handleCourseClick(course)}
+              style={{ 
+                padding: "8px", 
+                borderBottom: "1px solid #eee", 
+                color: "black",        // ✅ black color
+                textDecoration: "underline" // ✅ underline
+              }}
             >
               <strong>{course.code}</strong> - {course.name} ({course.department})
             </li>
@@ -128,7 +127,6 @@ const CourseSearch = () => {
         Search
       </button>
 
-
       {showResults && (
         <div style={{ marginTop: "30px", textAlign: "left" }}>
           {filteredCourses.length === 0 ? (
@@ -138,10 +136,13 @@ const CourseSearch = () => {
               {filteredCourses.map((course) => (
                 <li
                   key={course._id}
+                  onClick={() => handleCourseClick(course)} // ✅ navigate to course page
                   style={{
                     padding: "10px",
                     borderBottom: "1px solid #ccc",
                     fontSize: "16px",
+                    color: "black",         // ✅ black color
+                    textDecoration: "underline" // ✅ underline
                   }}
                 >
                   <strong>{course.code}</strong> - {course.name} ({course.department})
@@ -156,3 +157,4 @@ const CourseSearch = () => {
 };
 
 export default CourseSearch;
+

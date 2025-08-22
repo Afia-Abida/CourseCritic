@@ -6,6 +6,9 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import CourseSearch from "./pages/CourseSearch";
 import SubmitReview from "./pages/SubmitReview";
+import SubmitFacultyReview from "./pages/SubmitFacultyReview"; // new
+import UserDashboard from "./pages/UserDashboard"; // new
+import CoursePage from "./pages/CoursePage";
 
 // Protect routes that need login
 function PrivateRoute({ children }) {
@@ -39,11 +42,36 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/submit-faculty-review"
+          element={
+            <PrivateRoute>
+              <SubmitFacultyReview />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <UserDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/course/:courseId"
+          element={
+            <PrivateRoute>
+              <CoursePage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
 
 

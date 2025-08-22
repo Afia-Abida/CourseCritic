@@ -11,13 +11,16 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/courses", require("./routes/courseRoutes"));
-app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));       
+app.use("/api/courses", require("./routes/courseRoutes"));  
+app.use("/api/reviews", require("./routes/reviewRoutes"));  
+app.use("/api/faculty", require("./routes/faculty"));                 // Faculties
+app.use("/api/faculty-reviews", require("./routes/facultyReviewRoutes")); // Faculty Reviews
+app.use("/api/users", require("./routes/userRoutes"));                  // User reviews
 
 // Connect to MongoDB and start server
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
     app.listen(process.env.PORT || 5000, () => {

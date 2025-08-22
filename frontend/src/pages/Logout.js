@@ -7,6 +7,7 @@ const Logout = () => {
   useEffect(() => {
     // Remove user authentication data
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     localStorage.removeItem("user");
 
     // Redirect to Home page
