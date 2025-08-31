@@ -5,6 +5,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Signup = () => {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
       });
 
       const data = await response.json();
@@ -24,6 +25,7 @@ const Signup = () => {
         // Auto-login after successful signup
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
+        localStorage.setItem("role", data.user?.role || role);
         
         setSuccessMessage("Signup successful! Redirecting...");
         setErrorMessage("");
@@ -43,13 +45,13 @@ const Signup = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-      <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "8px", width: "320px" }}>
+      <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "8px", width: "320px", background: "#fff" }}>
         <h2 style={{ textAlign: "center" }}>Signup</h2>
 
         <form onSubmit={handleSignup} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -57,12 +59,22 @@ const Signup = () => {
           />
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             style={{ padding: "10px", fontSize: "16px", boxSizing: "border-box", width: "100%" }}
           />
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+            style={{ padding: "10px", fontSize: "16px", boxSizing: "border-box", width: "100%" }}
+          >
+            <option value="" disabled>Select Your Role</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+          </select>
           <input
             type="password"
             placeholder="Password"
@@ -73,7 +85,7 @@ const Signup = () => {
           />
           <button
             type="submit"
-            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#007bff", color: "#fff", border: "none", cursor: "pointer", borderRadius: "4px", boxSizing: "border-box", width: "100%" }}
+            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#8b5cf6", color: "#fff", border: "none", cursor: "pointer", borderRadius: "4px", boxSizing: "border-box", width: "100%" }}
           >
             Signup
           </button>

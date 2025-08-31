@@ -8,7 +8,7 @@ const router = express.Router();
 // Signup route
 router.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
@@ -20,7 +20,8 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = new User({ name, email, password: hashedPassword });
+    const normalizedRole = ["student", "faculty", "admin"].includes(role) ? role : "student";
+    const user = new User({ name, email, password: hashedPassword, role: normalizedRole });
     await user.save();
 
     // Generate token for auto-login after signup
@@ -33,7 +34,8 @@ router.post("/signup", async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error) {
@@ -67,7 +69,8 @@ router.post("/login", async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error) {
@@ -86,6 +89,43 @@ router.get("/profile", async (req, res) => {
     res.json(user);
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
+  }
+});
+
+// Update profile route
+router.put("/profile", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token" });
+    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    
+    const { name, email, password } = req.body;
+    
+    // Update fields
+    if (name) user.name = name;
+    if (email) {
+      // Check if email is already taken by another user
+      const existingUser = await User.findOne({ email, _id: { $ne: user._id } });
+      if (existingUser) {
+        return res.status(400).json({ message: "Email already in use by another account" });
+      }
+      user.email = email;
+    }
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+    
+    await user.save();
+    
+    // Return updated user data (without password)
+    const updatedUser = await User.findById(user._id).select("-password");
+    res.json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    res.status(500).json({ message: "Failed to update profile" });
   }
 });
 

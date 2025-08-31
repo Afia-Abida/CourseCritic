@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const SubmitReview = ({ onReviewSubmitted, hideCourseSelect }) => {
+const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [ratingDifficulty, setRatingDifficulty] = useState("");
@@ -21,10 +21,15 @@ const SubmitReview = ({ onReviewSubmitted, hideCourseSelect }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const courseIdFromParam = params.get("courseId");
-    if (courseIdFromParam) setSelectedCourse(courseIdFromParam);
-  }, [location]);
+    // Prioritize courseId prop (from CoursePage) over URL params
+    if (courseId) {
+      setSelectedCourse(courseId);
+    } else {
+      const params = new URLSearchParams(location.search);
+      const courseIdFromParam = params.get("courseId");
+      if (courseIdFromParam) setSelectedCourse(courseIdFromParam);
+    }
+  }, [location, courseId]);
 
   useEffect(() => {
     if (hideCourseSelect) return;
@@ -111,8 +116,8 @@ const SubmitReview = ({ onReviewSubmitted, hideCourseSelect }) => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "30px auto", textAlign: "center", fontFamily: "Arial, sans-serif" }}>
-      <h2>Submit Review</h2>
+    <div style={{ maxWidth: "480px", margin: "40px auto", textAlign: "center", fontFamily: "Arial, sans-serif", background: "#fff", padding: 24, borderRadius: 10, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}>
+      <h2>Submit Course Review</h2>
 
       {errorMessage && <div style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</div>}
 
@@ -225,7 +230,7 @@ const SubmitReview = ({ onReviewSubmitted, hideCourseSelect }) => {
           style={{
             width: "100%",
             padding: "12px",
-            backgroundColor: "#007bff",
+            backgroundColor: "#8b5cf6",
             color: "white",
             border: "none",
             cursor: "pointer",

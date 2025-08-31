@@ -17,6 +17,7 @@ app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/faculty", require("./routes/faculty"));                 // Faculties
 app.use("/api/faculty-reviews", require("./routes/facultyReviewRoutes")); // Faculty Reviews
 app.use("/api/users", require("./routes/userRoutes"));                  // User reviews
+app.use("/api/admin", require("./routes/adminRoutes"));                 // Admin routes
 
 // Connect to MongoDB and start server
 mongoose

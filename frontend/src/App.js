@@ -8,7 +8,14 @@ import CourseSearch from "./pages/CourseSearch";
 import SubmitReview from "./pages/SubmitReview";
 import SubmitFacultyReview from "./pages/SubmitFacultyReview"; // new
 import UserDashboard from "./pages/UserDashboard"; // new
+import FacultySearch from "./pages/FacultySearch"; // new
+import FacultyPage from "./pages/FacultyPage"; // new
 import CoursePage from "./pages/CoursePage";
+import EditProfile from "./pages/EditProfile";
+import AdminStudents from "./pages/AdminStudents";
+import AdminFaculties from "./pages/AdminFaculties";
+import AdminReportedCourseReviews from "./pages/AdminReportedCourseReviews";
+import AdminReportedFacultyReviews from "./pages/AdminReportedFacultyReviews";
 
 // Protect routes that need login
 function PrivateRoute({ children }) {
@@ -63,6 +70,62 @@ function App() {
           element={
             <PrivateRoute>
               <CoursePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/faculties"
+          element={
+            <PrivateRoute>
+              <FacultySearch />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/faculty/:facultyId"
+          element={
+            <PrivateRoute>
+              <FacultyPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/students"
+          element={
+            <PrivateRoute>
+              <AdminStudents />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/faculties"
+          element={
+            <PrivateRoute>
+              <AdminFaculties />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/reported-course-reviews"
+          element={
+            <PrivateRoute>
+              <AdminReportedCourseReviews />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/reported-faculty-reviews"
+          element={
+            <PrivateRoute>
+              <AdminReportedFacultyReviews />
             </PrivateRoute>
           }
         />

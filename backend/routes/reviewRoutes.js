@@ -22,6 +22,9 @@ router.post("/", requireAuth, async (req, res) => {
     }
 
     const userId = req.user._id;
+    if (req.user.role !== "student") {
+      return res.status(403).json({ message: "Only students can submit course reviews" });
+    }
 
     const review = new Review({
       course,
@@ -47,7 +50,10 @@ router.post("/", requireAuth, async (req, res) => {
 // ✅ FIXED: now matches frontend request GET /api/reviews/user/:userId
 router.get("/user/:userId", requireAuth, async (req, res) => {
   try {
-    const reviews = await Review.find({ user: req.params.userId }).populate("course");
+    const reviews = await Review.find({ user: req.params.userId })
+      .populate("course", "code name")
+      .populate("faculty", "name")
+      .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (err) {
     console.error(err);
@@ -152,7 +158,7 @@ router.put("/:id", requireAuth, async (req, res) => {
   try {
     const reviewId = req.params.id;
     const userId = req.user._id;
-    const { comment, ratingDifficulty, ratingWorkload, ratingUsefulness } = req.body;
+    const { comment, ratingDifficulty, ratingWorkload, ratingUsefulness, anonymous } = req.body;
 
     const review = await Review.findById(reviewId);
     if (!review) {
@@ -169,11 +175,13 @@ router.put("/:id", requireAuth, async (req, res) => {
     if (ratingDifficulty !== undefined) review.ratingDifficulty = ratingDifficulty;
     if (ratingWorkload !== undefined) review.ratingWorkload = ratingWorkload;
     if (ratingUsefulness !== undefined) review.ratingUsefulness = ratingUsefulness;
+    if (anonymous !== undefined) review.anonymous = !!anonymous;
 
     await review.save();
     
     const updatedReview = await Review.findById(reviewId)
       .populate("user", "name email")
+      .populate("course", "code name")
       .populate("faculty", "name");
     
     res.json(updatedReview);

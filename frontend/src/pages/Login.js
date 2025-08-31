@@ -22,6 +22,7 @@ const Login = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
+        localStorage.setItem("role", data.user?.role || "student");
 
         setSuccessMessage("Login successful! Redirecting...");
         setErrorMessage("");
@@ -42,7 +43,7 @@ const Login = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-      <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "8px", width: "320px" }}>
+      <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "8px", width: "320px", background: "#fff" }}>
         <h2 style={{ textAlign: "center" }}>Login</h2>
 
         
@@ -72,7 +73,7 @@ const Login = () => {
             style={{
               padding: "10px",
               fontSize: "16px",
-              backgroundColor: "#007bff",
+              backgroundColor: "#8b5cf6",
               color: "#fff",
               border: "none",
               cursor: "pointer",

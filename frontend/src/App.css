@@ -1,8 +1,28 @@
 /* App.css */
+
+:root {
+  /* Lavender theme */
+  --bg: #f5f3ff;            /* very light lavender */
+  --bg-accent: #ede9fe;      /* light lavender */
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e9e5ff;
+  --primary: #8b5cf6;        /* lavender primary */
+  --primary-hover: #7c3aed;  /* deeper lavender */
+  --success: #22c55e;
+  --danger: #ff0000;
+  --danger-hover: #dc2626;
+  --card-bg: #ffffff;
+  --radius: 10px;
+  --shadow: 0 10px 25px rgba(2, 6, 23, 0.06);
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f7f7f7;
+  background: linear-gradient(135deg, #e6e6fa 0%, #d8bfd8 30%, #e6e6fa 70%, #f0e6ff 100%);
+  color: var(--text);
+  min-height: 100vh;
 }
 
 .container {
@@ -13,12 +33,12 @@ body {
 }
 
 .form-box {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .form-box h2 {
@@ -31,36 +51,41 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   font-size: 14px;
+  box-sizing: border-box;
+  background: #fff;
 }
 
 button {
   width: 100%;
   padding: 12px;
-  background-color: #4a90e2;
+  background-color: var(--primary);
   border: none;
   color: white;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #357ab8;
+  background-color: var(--primary-hover);
 }
 
 .home-page {
   text-align: center;
-  padding: 60px;
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .home-page h1 {
   font-size: 3rem;
-  color: #333;
+  color: var(--primary-hover);
+  margin-bottom: 6px;
 }
 
 .logout-btn {
@@ -70,4 +95,97 @@ button:hover {
 
 .logout-btn:hover {
   background-color: #d32f2f;
+}
+
+/* New: Buttons system */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-sm {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-success { background: var(--success); color: #fff; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: var(--danger-hover); }
+.btn-muted { background: #6b7280; color: #fff; }
+
+/* Link-styled small text actions */
+.link-text {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+.link-text:hover {
+  text-decoration: underline;
+  color: inherit;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.link-text.link-danger:hover { color: #dc2626; }
+
+/* Edit Profile link styling */
+.edit-profile-link {
+  text-decoration: none;
+}
+.edit-profile-link:hover {
+  text-decoration: underline;
+}
+
+/* New: Card for reviews */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.review-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Tabs */
+.tabs {
+  display: inline-flex;
+  background: #e5e7eb;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 6px;
+}
+.tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  border: none;
+}
+.tab.active {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
 }

@@ -8,6 +8,7 @@ function CoursePage() {
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [course, setCourse] = useState(null);
   const [activeTab, setActiveTab] = useState("reviews"); // ✅ tab state
+  const role = localStorage.getItem("role") || "student";
 
   const handleReviewSubmitted = () => setRefreshFlag(!refreshFlag);
 
@@ -32,9 +33,9 @@ function CoursePage() {
   return (
     <div style={{ maxWidth: "800px", margin: "20px auto", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
       {/* ✅ Centered course title */}
-      <h1 style={{ marginBottom: "20px" }}>
+      <h2 style={{ marginBottom: "20px" }}>
         {course.code} - {course.name}
-      </h1>
+      </h2>
 
       {/* ✅ Tabs */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
@@ -43,7 +44,7 @@ function CoursePage() {
           style={{ 
             padding: "10px 20px", 
             marginRight: "10px", 
-            background: activeTab === "reviews" ? "#007bff" : "#f0f0f0", 
+            background: activeTab === "reviews" ? "#8b5cf6" : "#f0f0f0", 
             color: activeTab === "reviews" ? "#fff" : "#000", 
             border: "none", 
             borderRadius: "5px", 
@@ -52,19 +53,21 @@ function CoursePage() {
         >
           Reviews
         </button>
-        <button 
-          onClick={() => setActiveTab("submit")} 
-          style={{ 
-            padding: "10px 20px", 
-            background: activeTab === "submit" ? "#007bff" : "#f0f0f0", 
-            color: activeTab === "submit" ? "#fff" : "#000", 
-            border: "none", 
-            borderRadius: "5px", 
-            cursor: "pointer" 
-          }}
-        >
-          Submit Your Review
-        </button>
+        {role === "student" && (
+          <button 
+            onClick={() => setActiveTab("submit")} 
+            style={{ 
+              padding: "10px 20px", 
+              background: activeTab === "submit" ? "#8b5cf6" : "#f0f0f0", 
+              color: activeTab === "submit" ? "#fff" : "#000", 
+              border: "none", 
+              borderRadius: "5px", 
+              cursor: "pointer" 
+            }}
+          >
+            Submit Your Review
+          </button>
+        )}
       </div>
 
       {/* ✅ Conditional rendering */}
@@ -78,6 +81,3 @@ function CoursePage() {
 }
 
 export default CoursePage;
-
-
-

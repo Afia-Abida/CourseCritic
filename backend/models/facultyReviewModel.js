@@ -28,8 +28,16 @@ const facultyReviewSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    upvotedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] }],
+    reports: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] }],
   },
   { timestamps: true }
 );
+
+// Virtual upvotes count for compatibility
+facultyReviewSchema.virtual("upvotes").get(function () {
+  return (this.upvotedBy && this.upvotedBy.length) || 0;
+});
+facultyReviewSchema.set("toJSON", { virtuals: true });
 
 module.exports = mongoose.model("FacultyReview", facultyReviewSchema);

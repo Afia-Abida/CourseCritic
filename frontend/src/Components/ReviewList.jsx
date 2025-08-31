@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import StarRating from "./StarRating";
+import Pagination from "./Pagination";
 
 const ReviewList = ({ courseId }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(""); // inline status/errors
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
 
@@ -100,10 +104,16 @@ const ReviewList = ({ courseId }) => {
   if (loading) return <p style={{ textAlign: "center", color: "#666", fontStyle: "italic" }}>Loading course reviews...</p>;
   if (!reviews.length) return <p style={{ textAlign: "center", color: "#666", fontStyle: "italic" }}>No reviews yet for this course.</p>;
 
+  // Calculate pagination
+  const totalPages = Math.ceil(reviews.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReviews = reviews.slice(startIndex, endIndex);
+
   return (
     <div>
       {message && <p style={{ color: "red" }}>{message}</p>}
-      {reviews.map((review) => {
+      {currentReviews.map((review) => {
         const reviewerName = review.anonymous ? "Anonymous" : review.user?.name || "Unknown";
 
         // Fallback to 0 stars if legacy data is missing
@@ -120,27 +130,40 @@ const ReviewList = ({ courseId }) => {
             key={review._id}
             style={{
               border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
+              padding: "12px",
+              marginBottom: "12px",
+              background: "#fff",
+              borderRadius: 8,
               display: "flex",
               flexDirection: "column",
               position: "relative",
             }}
           >
-            <strong>{reviewerName}</strong>
+            <div style={{ fontSize: 15, color: "#000000ff", marginBottom: "4px" }}>
+              {reviewerName}
+            </div>
             {review.faculty?.name && (
-              <div style={{ fontSize: 12, color: "#555" }}>
+              <div style={{ fontSize: 12, color: "#555", marginBottom: "6px" }}>
                 Faculty: {review.faculty.name}
                 {review.facultyRating ? ` — ★${review.facultyRating}` : ""}
               </div>
             )}
-            {review.comment || review.text ? <p>{review.comment ?? review.text}</p> : null}
-
-            <p>Difficulty: {"★".repeat(difficulty)}</p>
-            <p>Workload: {"★".repeat(workload)}</p>
-            <p>Usefulness: {"★".repeat(usefulness)}</p>
-
-            <p>Upvotes: {review.upvotes ?? 0}</p>
+            <div style={{ marginBottom: "8px" }}>
+              <p style={{ margin: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                <span>Difficulty:</span> <StarRating rating={difficulty} size={14} />
+              </p>
+              <p style={{ margin: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                <span>Workload:</span> <StarRating rating={workload} size={14} />
+              </p>
+              <p style={{ margin: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                <span>Usefulness:</span> <StarRating rating={usefulness} size={14} />
+              </p>
+            </div>
+            {review.comment || review.text ? <p style={{ marginBottom: "8px" }}>{review.comment ?? review.text}</p> : null}
+            <div style={{ fontSize: 11, color: "#9ca3af", marginBottom: "6px" }}>
+              Submitted: {new Date(review.createdAt).toLocaleDateString()}
+            </div>
+            <p style={{ fontSize: "12px", color: "#6b7280", margin: "4px 0" }}>Upvotes: {review.upvotes ?? 0}</p>
 
             <div style={{ 
               display: "flex", 
@@ -148,19 +171,19 @@ const ReviewList = ({ courseId }) => {
               gap: "10px",
               marginTop: "10px"
             }}>
-                             <button 
-                 onClick={() => toggleUpvote(review._id)}
-                 style={{
-                   backgroundColor: hasUpvoted ? "#28a745" : "#007bff",
-                   color: "white",
-                   border: "none",
-                   padding: "6px 4px",
-                   borderRadius: "3px",
-                   cursor: "pointer",
-                   fontSize: "10px",
-                   transition: "background-color 0.2s",
-                   minWidth: "50px"
-                 }}
+               <button 
+                onClick={() => toggleUpvote(review._id)}
+                style={{
+                  backgroundColor: hasUpvoted ? "#6c757d" : "#28a745",
+                  color: "white",
+                  border: "none",
+                  padding: "6px 4px",
+                  borderRadius: "3px",
+                  cursor: "pointer",
+                  fontSize: "10px",
+                  transition: "background-color 0.2s",
+                  minWidth: "50px"
+                }}
                >
                  {hasUpvoted ? "Upvoted" : "Upvote"}
                </button>
@@ -185,12 +208,20 @@ const ReviewList = ({ courseId }) => {
           </div>
         );
       })}
+      
+      {/* Pagination Component */}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={reviews.length}
+        />
+      )}
     </div>
   );
 };
 
 export default ReviewList;
-
-
-
 
