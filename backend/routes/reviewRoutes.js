@@ -32,8 +32,6 @@ router.post("/", requireAuth, async (req, res) => {
       comment,
       anonymous: !!anonymous,
       user: userId,
-      faculty: faculty || null,
-      facultyRating: facultyRating || null,
     });
 
     await review.save();
