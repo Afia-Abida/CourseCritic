@@ -13,8 +13,6 @@ router.post("/", requireAuth, async (req, res) => {
       ratingUsefulness,
       comment,
       anonymous,
-      faculty,        // optional
-      facultyRating,  // optional
     } = req.body;
 
     if (!course || !ratingDifficulty || !ratingWorkload || !ratingUsefulness) {
