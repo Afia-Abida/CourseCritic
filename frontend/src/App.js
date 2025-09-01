@@ -6,10 +6,10 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import CourseSearch from "./pages/CourseSearch";
 import SubmitReview from "./pages/SubmitReview";
-import SubmitFacultyReview from "./pages/SubmitFacultyReview"; // new
-import UserDashboard from "./pages/UserDashboard"; // new
-import FacultySearch from "./pages/FacultySearch"; // new
-import FacultyPage from "./pages/FacultyPage"; // new
+import SubmitFacultyReview from "./pages/SubmitFacultyReview";
+import UserSubmittedReviews from "./pages/UserSubmittedReviews";
+import FacultySearch from "./pages/FacultySearch";
+import FacultyPage from "./pages/FacultyPage";
 import CoursePage from "./pages/CoursePage";
 import EditProfile from "./pages/EditProfile";
 import AdminStudents from "./pages/AdminStudents";
@@ -61,7 +61,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <UserDashboard />
+              <UserSubmittedReviews />
             </PrivateRoute>
           }
         />

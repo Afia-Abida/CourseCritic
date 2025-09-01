@@ -11,7 +11,7 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [modalType, setModalType] = useState("alert");
+  // const [modalType, setModalType] = useState("alert"); // Removed unused variable
   
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -38,13 +38,11 @@ const EditProfile = () => {
           });
         } else {
           setModalMessage("Failed to load profile data");
-          setModalType("alert");
           setShowModal(true);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
         setModalMessage("Error loading profile data");
-        setModalType("alert");
         setShowModal(true);
       } finally {
         setLoading(false);
@@ -52,6 +50,7 @@ const EditProfile = () => {
     };
 
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, navigate]);
 
   const handleChange = (e) => {
@@ -68,7 +67,6 @@ const EditProfile = () => {
     // Validate passwords if changing password
     if (formData.password && formData.password !== formData.confirmPassword) {
       setModalMessage("Passwords do not match");
-      setModalType("alert");
       setShowModal(true);
       return;
     }
@@ -95,7 +93,6 @@ const EditProfile = () => {
 
       if (response.ok) {
         setModalMessage("Profile updated successfully!");
-        setModalType("alert");
         setShowModal(true);
         
         // Clear password fields
@@ -107,13 +104,11 @@ const EditProfile = () => {
       } else {
         const errorData = await response.json();
         setModalMessage(errorData.message || "Failed to update profile");
-        setModalType("alert");
         setShowModal(true);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
       setModalMessage("Error updating profile");
-      setModalType("alert");
       setShowModal(true);
     }
   };

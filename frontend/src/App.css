@@ -2,13 +2,13 @@
 
 :root {
   /* Lavender theme */
-  --bg: #f5f3ff;            /* very light lavender */
-  --bg-accent: #ede9fe;      /* light lavender */
+  --bg: #f5f3ff;           
+  --bg-accent: #ede9fe;     
   --text: #1f2937;
   --muted: #6b7280;
   --border: #e9e5ff;
-  --primary: #8b5cf6;        /* lavender primary */
-  --primary-hover: #7c3aed;  /* deeper lavender */
+  --primary: #8b5cf6;       
+  --primary-hover: #7c3aed;  
   --success: #22c55e;
   --danger: #ff0000;
   --danger-hover: #dc2626;

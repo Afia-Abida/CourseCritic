@@ -12,16 +12,12 @@ const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // NEW (optional faculty)
-  const [faculties, setFaculties] = useState([]);
-  const [faculty, setFaculty] = useState("");
-  const [facultyRating, setFacultyRating] = useState("");
 
   const token = localStorage.getItem("token");
   const location = useLocation();
 
   useEffect(() => {
-    // Prioritize courseId prop (from CoursePage) over URL params
+
     if (courseId) {
       setSelectedCourse(courseId);
     } else {
@@ -47,20 +43,6 @@ const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
     fetchCourses();
   }, [hideCourseSelect]);
 
-  // Fetch faculties by course (only when a course is already chosen via URL)
-  useEffect(() => {
-    const loadFaculties = async () => {
-      if (!selectedCourse) return;
-      try {
-        const res = await fetch(`/api/faculty/by-course/${selectedCourse}`);
-        const data = await res.json();
-        if (res.ok) setFaculties(data);
-      } catch {
-        // ignore silently
-      }
-    };
-    loadFaculties();
-  }, [selectedCourse]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,8 +67,6 @@ const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
           ratingUsefulness: Number(ratingUsefulness),
           comment,
           anonymous,
-          faculty: faculty || null, // optional
-          facultyRating: facultyRating ? Number(facultyRating) : null, // optional
         }),
       });
 
@@ -101,8 +81,6 @@ const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
         setRatingUsefulness("");
         setComment("");
         setAnonymous(false);
-        setFaculty("");
-        setFacultyRating("");
 
         if (onReviewSubmitted) onReviewSubmitted();
       } else {
@@ -148,32 +126,6 @@ const SubmitReview = ({ courseId, onReviewSubmitted, hideCourseSelect }) => {
           </>
         )}
 
-        {/* Optional faculty rating (shown if faculties exist for this course) */}
-        {faculties.length > 0 && (
-          <>
-            <label style={{ display: "block", marginBottom: 5 }}>Faculty (optional)</label>
-            <select
-              value={faculty}
-              onChange={(e) => setFaculty(e.target.value)}
-              style={{ width: "100%", padding: 8, marginBottom: 15 }}
-            >
-              <option value="">Choose a faculty</option>
-              {faculties.map((f) => (
-                <option key={f._id} value={f._id}>{f.name}</option>
-              ))}
-            </select>
-
-            <label style={{ display: "block", marginBottom: 5 }}>Faculty Rating (1-5)</label>
-            <input
-              type="number"
-              min="1"
-              max="5"
-              value={facultyRating}
-              onChange={(e) => setFacultyRating(e.target.value)}
-              style={{ width: "100%", padding: 8, marginBottom: 15 }}
-            />
-          </>
-        )}
 
         <label style={{ display: "block", marginBottom: "5px" }}>Difficulty Rating (1-5)*</label>
         <input

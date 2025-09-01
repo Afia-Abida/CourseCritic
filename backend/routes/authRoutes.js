@@ -104,7 +104,6 @@ router.put("/profile", async (req, res) => {
     
     const { name, email, password } = req.body;
     
-    // Update fields
     if (name) user.name = name;
     if (email) {
       // Check if email is already taken by another user

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SubmitFacultyReview from "./SubmitFacultyReview";
 import StarRating from "../Components/StarRating";
 import Pagination from "../Components/Pagination";
@@ -12,7 +12,7 @@ const FacultyPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const role = localStorage.getItem("role") || "student";
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Removed unused variable
 
   const loadReviews = async () => {
     try {
@@ -103,9 +103,10 @@ const FacultyPage = () => {
       loadFaculty();
       loadReviews();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facultyId]);
 
-  // Ensure the submit form is visible without manual scrolling
+
   useEffect(() => {
     if (activeTab === "submit") {
       window.scrollTo({ top: 0, behavior: "instant" });

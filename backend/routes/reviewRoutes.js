@@ -47,7 +47,7 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
-// ✅ FIXED: now matches frontend request GET /api/reviews/user/:userId
+// GET reviews by user
 router.get("/user/:userId", requireAuth, async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.params.userId })
@@ -135,7 +135,7 @@ router.post("/report/:id", requireAuth, async (req, res) => {
       review.reports = review.reports.filter(id => id.toString() !== userId.toString());
       await review.save();
       res.json({ 
-        message: "Report removed successfully",
+        message: "Report removed successfully.",
         reports: review.reports
       });
     } else {
@@ -143,7 +143,7 @@ router.post("/report/:id", requireAuth, async (req, res) => {
       review.reports.push(userId);
       await review.save();
       res.json({ 
-        message: "Review reported successfully",
+        message: "Review reported successfully.",
         reports: review.reports
       });
     }

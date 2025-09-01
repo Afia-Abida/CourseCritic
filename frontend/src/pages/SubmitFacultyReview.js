@@ -1,12 +1,11 @@
-// frontend/src/pages/SubmitFacultyReview.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const SubmitFacultyReview = ({ preselectedFacultyId, hideFacultySelect, embedded = false, onReviewSubmitted }) => {
   const [facultyList, setFacultyList] = useState([]);
-  const [selectedFaculty, setSelectedFaculty] = useState(""); // Empty string for "Choose a faculty"
-  const [rating, setRating] = useState(""); // blank initially
+  const [selectedFaculty, setSelectedFaculty] = useState(""); 
+  const [rating, setRating] = useState(""); 
   const [comment, setComment] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const [message, setMessage] = useState("");
@@ -37,7 +36,7 @@ const SubmitFacultyReview = ({ preselectedFacultyId, hideFacultySelect, embedded
           headers: { Authorization: `Bearer ${token}` },
         });
         setFacultyList(res.data);
-        // Don't auto-select any faculty - let user choose
+   
       } catch (err) {
         console.error("Error fetching faculty list:", err);
         if (err.response?.status === 401) {
@@ -64,7 +63,7 @@ const SubmitFacultyReview = ({ preselectedFacultyId, hideFacultySelect, embedded
     }
     setMessage("");
     
-    // Validation
+
     if (!selectedFaculty) {
       setMessage("Please select a faculty");
       return;
@@ -75,7 +74,6 @@ const SubmitFacultyReview = ({ preselectedFacultyId, hideFacultySelect, embedded
       return;
     }
     
-    // Comment is now optional
     
     try {
       await axios.post(
@@ -94,7 +92,7 @@ const SubmitFacultyReview = ({ preselectedFacultyId, hideFacultySelect, embedded
       setComment("");
       setAnonymous(false);
       
-      // Call the callback to refresh reviews in real-time
+
       if (onReviewSubmitted) {
         onReviewSubmitted();
       }

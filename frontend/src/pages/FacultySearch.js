@@ -6,7 +6,7 @@ const FacultySearch = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [showResults, setShowResults] = useState(false);
+  // const [showResults, setShowResults] = useState(false); // Removed unused variable
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const FacultySearch = () => {
     if (searchTerm.trim() === "") {
       setFiltered([]);
       setShowSuggestions(false);
-      setShowResults(false);
       return;
     }
     const q = searchTerm.toLowerCase();
@@ -35,12 +34,10 @@ const FacultySearch = () => {
     );
     setFiltered(list);
     setShowSuggestions(true);
-    setShowResults(false);
   }, [searchTerm, faculties]);
   
   const handleSearch = () => {
     if (searchTerm.trim() === "") {
-      setShowResults(false);
       setFiltered([]);
       setShowSuggestions(false);
     } else {
@@ -49,7 +46,6 @@ const FacultySearch = () => {
         (f) => f.name.toLowerCase().includes(q) || (f.initials || "").toLowerCase().includes(q)
       );
       setFiltered(list);
-      setShowResults(true);
       setShowSuggestions(false);
     }
   };

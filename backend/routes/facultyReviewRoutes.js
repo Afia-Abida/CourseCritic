@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const FacultyReview = require("../models/facultyReviewModel");
-const { requireAuth } = require("../middleware/authMiddleware"); // ✅ added
+const { requireAuth } = require("../middleware/authMiddleware"); 
 
 // Create a new faculty review
 router.post("/", requireAuth, async (req, res) => {
@@ -45,7 +45,7 @@ router.get("/faculty/:facultyId", async (req, res) => {
   }
 });
 
-// 🔥 Get all faculty reviews by a specific user (secured)
+// Get all faculty reviews by a specific user (secured)
 router.get("/user/:id/reviews", requireAuth, async (req, res) => {
   const userId = req.params.id;
   try {
@@ -107,6 +107,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
 });
 
 module.exports = router;
+
 // Upvote toggle for faculty reviews
 router.post("/upvote/:id", requireAuth, async (req, res) => {
   try {

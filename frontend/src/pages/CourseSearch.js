@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const CourseSearch = () => {
   const [courses, setCourses] = useState([]);
@@ -8,7 +8,7 @@ const CourseSearch = () => {
   const [showResults, setShowResults] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -57,7 +57,7 @@ const CourseSearch = () => {
     }
   };
 
-  // ✅ Navigate to CoursePage with courseId param
+  // Navigate to CoursePage with courseId param
   const handleCourseClick = (course) => {
     navigate(`/course/${course._id}`);
   };
@@ -102,8 +102,8 @@ const CourseSearch = () => {
               style={{ 
                 padding: "8px", 
                 borderBottom: "1px solid #eee", 
-                color: "black",        // ✅ black color
-                textDecoration: "underline" // ✅ underline
+                color: "black",       
+                textDecoration: "underline" 
               }}
             >
               <strong>{course.code}</strong> - {course.name} ({course.department})
@@ -136,13 +136,13 @@ const CourseSearch = () => {
               {filteredCourses.map((course) => (
                 <li
                   key={course._id}
-                  onClick={() => handleCourseClick(course)} // ✅ navigate to course page
+                  onClick={() => handleCourseClick(course)} // navigate to course page
                   style={{
                     padding: "10px",
                     borderBottom: "1px solid #ccc",
                     fontSize: "16px",
-                    color: "black",         // ✅ black color
-                    textDecoration: "underline" // ✅ underline
+                    color: "black",         
+                    textDecoration: "underline" 
                   }}
                 >
                   <strong>{course.code}</strong> - {course.name} ({course.department})

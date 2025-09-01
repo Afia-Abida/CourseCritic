@@ -5,7 +5,7 @@ import Pagination from "./Pagination";
 const ReviewList = ({ courseId }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState(""); // inline status/errors
+  const [message, setMessage] = useState(""); 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const token = localStorage.getItem("token");
@@ -80,7 +80,7 @@ const ReviewList = ({ courseId }) => {
       });
       const data = await res.json();
       if (res.ok) {
-        // Update the reviews state to reflect the report status
+
         setReviews((prev) =>
           prev.map((r) =>
             r._id === reviewId

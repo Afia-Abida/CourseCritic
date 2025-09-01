@@ -6,5 +6,4 @@ const FacultySchema = new mongoose.Schema({
   department: { type: String }
 });
 
-// Use the exact collection name
 module.exports = mongoose.model("Faculty", FacultySchema, "faculties");

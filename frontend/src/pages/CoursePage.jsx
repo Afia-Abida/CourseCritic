@@ -7,7 +7,7 @@ function CoursePage() {
   const { courseId } = useParams();
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [course, setCourse] = useState(null);
-  const [activeTab, setActiveTab] = useState("reviews"); // ✅ tab state
+  const [activeTab, setActiveTab] = useState("reviews"); 
   const role = localStorage.getItem("role") || "student";
 
   const handleReviewSubmitted = () => setRefreshFlag(!refreshFlag);
@@ -32,12 +32,11 @@ function CoursePage() {
 
   return (
     <div style={{ maxWidth: "800px", margin: "20px auto", fontFamily: "Arial, sans-serif", textAlign: "center" }}>
-      {/* ✅ Centered course title */}
+
       <h2 style={{ marginBottom: "20px" }}>
         {course.code} - {course.name}
       </h2>
 
-      {/* ✅ Tabs */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
         <button 
           onClick={() => setActiveTab("reviews")} 
@@ -70,7 +69,7 @@ function CoursePage() {
         )}
       </div>
 
-      {/* ✅ Conditional rendering */}
+      {/* Conditional rendering */}
       {activeTab === "reviews" ? (
         <ReviewList key={refreshFlag} courseId={courseId} />
       ) : (

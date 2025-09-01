@@ -1,4 +1,3 @@
-// backend/models/facultyReviewModel.js
 const mongoose = require("mongoose");
 
 const facultyReviewSchema = new mongoose.Schema(

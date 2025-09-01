@@ -38,7 +38,7 @@ const Pagination = ({
       padding: '15px',
       borderTop: '1px solid #e5e7eb'
     }}>
-      {/* Items info */}
+
       <div style={{ 
         fontSize: '14px', 
         color: '#6b7280',
@@ -47,13 +47,12 @@ const Pagination = ({
         Showing {startItem}-{endItem} of {totalItems} items
       </div>
 
-      {/* Pagination controls */}
       <div style={{ 
         display: 'flex', 
         alignItems: 'center', 
         gap: '5px' 
       }}>
-        {/* Previous button */}
+
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}

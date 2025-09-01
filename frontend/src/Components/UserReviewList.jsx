@@ -106,7 +106,7 @@ const UserReviewList = ({ userId, token }) => {
   };
 
   const handleNumberInputChange = (field, value) => {
-    // Allow empty string or numbers between 1-5
+
     if (value === "" || (Number(value) >= 1 && Number(value) <= 5)) {
       setEditForm({ ...editForm, [field]: value === "" ? "" : Number(value) });
     }
