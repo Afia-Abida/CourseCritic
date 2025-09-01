@@ -26,9 +26,8 @@ router.delete("/me", requireAuth, async (req, res) => {
     const userId = req.user._id;
 
     // Delete all user's reviews (both course and faculty)
-    const deletedCourseReviews = await Review.deleteMany({ user: userId });
-    const deletedFacultyReviews = await FacultyReview.deleteMany({ user: userId });
-    console.log(`Deleted ${deletedCourseReviews.deletedCount} course reviews and ${deletedFacultyReviews.deletedCount} faculty reviews for user ${userId}`);
+    await Review.deleteMany({ user: userId });
+    await FacultyReview.deleteMany({ user: userId });
     
     // Delete the user account
     await User.findByIdAndDelete(userId);

@@ -6,7 +6,6 @@ const FacultySearch = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filtered, setFiltered] = useState([]);
-  // const [showResults, setShowResults] = useState(false); // Removed unused variable
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
