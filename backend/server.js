@@ -14,10 +14,10 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/authRoutes"));       
 app.use("/api/courses", require("./routes/courseRoutes"));  
 app.use("/api/reviews", require("./routes/reviewRoutes"));  
-app.use("/api/faculty", require("./routes/faculty"));                 // Faculties
-app.use("/api/faculty-reviews", require("./routes/facultyReviewRoutes")); // Faculty Reviews
-app.use("/api/users", require("./routes/userRoutes"));                  // User reviews
-app.use("/api/admin", require("./routes/adminRoutes"));                 // Admin routes
+app.use("/api/faculty", require("./routes/faculty"));         
+app.use("/api/faculty-reviews", require("./routes/facultyReviewRoutes")); 
+app.use("/api/users", require("./routes/userRoutes"));           
+app.use("/api/admin", require("./routes/adminRoutes"));         
 
 // Connect to MongoDB and start server
 mongoose
