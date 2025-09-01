@@ -12,7 +12,7 @@ const FacultyPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const role = localStorage.getItem("role") || "student";
-  // const navigate = useNavigate(); // Removed unused variable
+
 
   const loadReviews = async () => {
     try {

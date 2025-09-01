@@ -11,7 +11,7 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  // const [modalType, setModalType] = useState("alert"); // Removed unused variable
+
   
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
